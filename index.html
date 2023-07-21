@@ -5,17 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="astha modi">
     <title>Game:Rock Paper Scissor</title>
     <style>
         * {
             margin: 0;
             padding: 0;
-
         }
 
         body {
-            background-color: rgb(5, 141, 131);
-            padding: 3%;
+            background-color: rgb(65, 179, 171);
+            padding: 10px;
         }
 
         h1 {
@@ -50,7 +50,7 @@
 
         }
 
-        input[id="play"] {
+        input[id="btn"] {
             display: block;
             text-align: center;
             background-color: yellow;
@@ -62,65 +62,75 @@
             font-size: 20px;
         }
 
-        .container img {
+        #container img {
             display: inline;
             margin: 20px;
-    width: 70px;
+            width: 70px;
         }
 
-        .container {
-            display: block;
+        #container {
+            display: none;
             width: 100vw;
             text-align: center;
             margin: 7% 0;
 
         }
-        .container > div{
+
+        #container>div {
             align-items: center;
         }
-        .text {
-            color: rgb(1, 1, 1);
 
-            font-size: 30px;
-            text-transform: uppercase;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        h3 span {
+
+            font-size: 20px;
+            color: black
         }
 
-        .text2 {
-            font-size: 35px;
-            text-transform: uppercase;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            text-shadow: 4px 4px 10px black;
-            color: white;
-        }
-
-        .container>span {
-       
-            display: block;
-        height: 30px;
-        padding: 2%;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-size: 160%;
+        .instruction {
+            color: rgb(192, 16, 16);
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 17px;
             text-align: center;
         }
-#computer>img{
-    rotate: 90deg;
-}
+
+        #container>span {
+
+            display: block;
+            height: 30px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 160%;
+
+        }
+
+        #computer>img {
+            rotate: 90deg;
+        }
+
         #player>img {
-rotate: -90deg;
-            
+            rotate: -90deg;
+
         }
 
         #msg1 {
             color: rgb(0, 255, 0);
-            width: max-content;
-            margin: auto;
-            margin bottom: 3%:
-            text-shadow: 2px 2px 2px black;
-            font-size: 6vw;
+            text-shadow: -3px 5px 4px black;
+            font-size: 30px;
+
             text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         }
-    
+
+        .text {
+            color: rgb(1, 1, 1);
+            font-size: 30px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .anime {
+            color: yellow;
+            text-shadow: -4px 4px 4px black;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
@@ -131,8 +141,8 @@ rotate: -90deg;
     </section>
     <section>
         <h2>how to play:</h2><br>
-        There are 3 rounds against computer, who will win more rounds will be the winner!
-        <ol>
+        There are 10 rounds against computer, who will win more rounds will be the winner!
+        <ol style="padding-left:10%">
             <li>
                 If you choose Rock,you will win against Scissor but lose against Paper.
             </li>
@@ -144,35 +154,49 @@ rotate: -90deg;
             </li>
         </ol>
     </section>
-    <input type="button" value="play" id="play" onclick="play()">
-    <div class="container">
+    <p class="instruction"> click on the play button for start the game.</p>
+    <input type="button" value="play" id="btn" onclick="play()">
+    <div id="container">
         <div id="computer">
-            <h3 class="text">computer</h3>
+            <h3 class="text">computer (<span id="com_score">0</span>)</h3>
             <img src="rock.png" alt="rock" id="com_rock">
             <img src="paper.png" alt="paper" id="com_paper">
             <img src="scissor.png" alt="scissor" id="com_scissor">
         </div>
-        <span id="msg" ></span>
+        <span id="msg" class=""></span>
 
         <div id="player">
             <img src="rock.png" alt="rock" id="rock">
             <img src="paper.png" alt="paper" id="paper">
             <img src="scissor.png" alt="scissor" id="scissor">
-            <h3 class="text" id="you">you</h3>
+            <h3 class="text" id="you">you (<span id="score">0</span>)</h3>
+            <br>
+            <p class="instruction">click on the hand for choose your turn.</p>
         </div>
 
     </div>
     <p id="msg1"></p>
     <script>
+
         let msg = document.getElementById("msg");
         let msg1 = document.getElementById("msg1");
-        function play() {
+        let container = document.getElementById("container");
+        let instruction = document.querySelector(".instruction");
+        let btn = document.getElementById("btn");
+        let com_score = document.getElementById("com_score");
+        let score = document.getElementById("score");
 
-            let player = 0, computer;
-            let round = 1, score = 0;
-            if (player == 0) {
-                document.getElementById("you").className = "text2";
-            }
+
+        function play() {
+            btn.style.display = "none";
+            instruction.style.display = "none";
+            container.style.display = "block";
+            let cs = 0, ps = 0;
+            let round = 1;
+            msg.setAttribute("class", "anime");
+            msg.innerHTML = "round" + "&nbsp" + round;
+
+
 
             document.getElementById("rock").addEventListener('click', () => {
                 player = "rock";
@@ -199,14 +223,13 @@ rotate: -90deg;
                 document.getElementById("rock").style.boxShadow = "none";
 
                 document.getElementById("scissor").style.boxShadow = "none";
- start();
+                start();
             })
 
 
             function start() {
-
-                if (round <= 3) {
-
+                if (round <= 10) {
+                    msg.setAttribute("class", "text");
                     let random = parseInt(Math.random() * 100);
                     if (random >= 0 && random <= 33) {
                         computer = "rock";
@@ -230,10 +253,14 @@ rotate: -90deg;
                         }
                         if (player == "scissor") {
                             msg.innerText = "Computer Won!";
+                            cs++;
+                            com_score.innerHTML = cs;
+
                         }
                         if (player == "paper") {
                             msg.innerText = "You Won!";
-                            score++;
+                            ps++;
+                            score.innerHTML = ps;
                         }
 
 
@@ -247,13 +274,16 @@ rotate: -90deg;
 
                         if (player == "rock") {
                             msg.innerText = "You Won!";
-                            score++;
+                            ps++;
+                            score.innerHTML = ps;
                         }
                         if (player == "scissor") {
                             msg.innerText = "Draw!";
                         }
                         if (player == "paper") {
                             msg.innerText = "Computer Won!";
+                            cs++;
+                            com_score.innerHTML = cs;
                         }
                     }
                     else {
@@ -264,10 +294,13 @@ rotate: -90deg;
 
                         if (player == "rock") {
                             msg.innerText = "Computer Won!";
+                            cs++;
+                            com_score.innerHTML = cs;
                         }
                         if (player == "scissor") {
                             msg.innerText = "You Won!";
-                            score++;
+                            ps++;
+                            score.innerHTML = ps;
                         }
                         if (player == "paper") {
                             msg.innerText = "Draw!";
@@ -275,23 +308,29 @@ rotate: -90deg;
 
                     }
                     round++;
-                    
-                    if (round == 4) {
-                        if (score > 1) {
-                            msg1.innerText = "Congratulation you Win! 🏆";
-                        }
-                        else {
-                            msg1.innerText = "Oops! Computer Win.";
-                        }
-                        document.getElementById("you").className = "text";
 
-                        document.getElementById("play").value = "Restart";
-                        document.getElementById("play").addEventListener('click', () => {
-                            window.location.reload();
-                        })
+                    if (round == 11) {
+                        setTimeout(() => {
+                            if (ps > cs) {
+                                msg1.innerText = "Congratulation you Win!";
+                            }
+                            else {
+                                msg1.innerText = "Oops! Computer Win.";
+                            }
+                            container.style.display = "none";
+                            btn.style.display = "block";
+                            btn.value = "Restart";
+                            btn.addEventListener('click', () => {
+                                window.location.reload(true);
+                            })
+                        }, 2000)
                     }
-
-
+                else {
+                        setTimeout(() => {
+                            msg.setAttribute("class", "anime")
+                            msg.innerHTML = "round" + "&nbsp" + round
+                        }, 1000);
+                    }
                 }
 
             }
